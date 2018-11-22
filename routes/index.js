@@ -34,6 +34,20 @@ router.get('/all_reduce', function(req, res) {
       res.send(result);
     });
 });
+});
+
+router.get('/last_words', function(req, res) {
+  var url = "mongodb://pipibigdata:pipipipi1@ds163103.mlab.com:63103/epfbigdata";
+
+  MongoClient.connect(url, function(err, db) {
+    if (err) throw err;
+    var dbo = db.db("epfbigdata");
+    console.log(dbo.collection("tweets_of_the_day").find().sort({_id:-1}).limit(5).toArray());
+    dbo.collection("tweets_of_the_day").find().sort({_id:-1}).limit(5).toArray(function(err, result) {
+      res.send(result);
+    });
+});
+
 
 });
 
