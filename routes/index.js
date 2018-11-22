@@ -24,4 +24,17 @@ router.post('/save', function(req, res) {
     }
 });
 
+router.get('/all_reduce', function(req, res) {
+  var url = "mongodb://pipibigdata:pipipipi1@ds163103.mlab.com:63103/epfbigdata";
+
+  MongoClient.connect(url, function(err, db) {
+    if (err) throw err;
+    var dbo = db.db("epfbigdata");
+    dbo.collection("map_reduce").find({},{"Grippe":1, "_id":0}).toArray(function(err, result) {
+      res.send(result);
+    });
+});
+
+});
+
 module.exports = router;
